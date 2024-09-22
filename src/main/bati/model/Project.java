@@ -1,6 +1,7 @@
 package main.bati.model;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Project {
     private int id;
@@ -9,16 +10,16 @@ public class Project {
     private BigDecimal coutTotal;
     private String etatProjet;
     private int clientId;
-    private int devisId;
 
-    public Project(int id, String nomProjet, BigDecimal margeBeneficiaire, BigDecimal coutTotal, String etatProjet, int clientId, int devisId) {
+
+    public Project(int id, String nomProjet, BigDecimal margeBeneficiaire, BigDecimal coutTotal, String etatProjet, int clientId) {
         this.id = id;
         this.nomProjet = nomProjet;
         this.margeBeneficiaire = margeBeneficiaire;
         this.coutTotal = coutTotal;
         this.etatProjet = etatProjet;
         this.clientId = clientId;
-        this.devisId = devisId;
+
     }
 
     // Getters and setters
@@ -69,12 +70,26 @@ public class Project {
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
+    public void calculerCoutTotal(List<Materiau> materiaux, List<MainDoeuvre> mainDoeuvres) {
+        BigDecimal totalCost = BigDecimal.ZERO;
 
-    public int getDevisId() {
-        return devisId;
+        // Calculate the total cost of materials
+        for (Materiau materiau : materiaux) {
+            totalCost = totalCost.add(materiau.calculerCoutTotal());
+        }
+
+        // Calculate the total cost of labor
+        for (MainDoeuvre mainDoeuvre : mainDoeuvres) {
+            totalCost = totalCost.add(mainDoeuvre.calculerCoutTotal());
+        }
+
+        // Apply the profit margin if it exists
+        if (margeBeneficiaire != null) {
+            totalCost = totalCost.multiply(BigDecimal.ONE.add(margeBeneficiaire));
+        }
+
+        this.coutTotal = totalCost;
     }
 
-    public void setDevisId(int devisId) {
-        this.devisId = devisId;
-    }
+
 }

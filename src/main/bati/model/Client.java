@@ -44,7 +44,7 @@ public class Client {
         this.nom = nom;
     }
 
-    public String getAdresse() {
+    public String getAdress() {
         return adresse;
     }
 

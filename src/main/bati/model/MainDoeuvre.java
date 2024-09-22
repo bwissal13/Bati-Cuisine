@@ -12,7 +12,9 @@ public class MainDoeuvre extends Composant {
         this.tauxHoraire = tauxHoraire;
         this.heuresTravail = heuresTravail;
         this.productivite = productivite;
+
     }
+
 
     @Override
     public BigDecimal calculerCoutTotal() {

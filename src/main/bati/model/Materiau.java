@@ -8,12 +8,14 @@ public class Materiau extends Composant {
     private BigDecimal coutTransport;
     private BigDecimal coefficientQualite;
 
+
     public Materiau(String nom, BigDecimal coutUnitaire, String typeComposant, BigDecimal tauxTVA, int quantite, BigDecimal coutTransport, BigDecimal coefficientQualite) {
         super(nom, coutUnitaire, typeComposant, tauxTVA);
         this.quantite = quantite;
         this.coutTransport = coutTransport;
         this.coefficientQualite = coefficientQualite;
     }
+
 
     @Override
     public BigDecimal calculerCoutTotal() {

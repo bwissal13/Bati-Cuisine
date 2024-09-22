@@ -1,9 +1,6 @@
-// src/java/view/MainMenuView.java
 package main.bati.view;
 
-import main.bati.service.ClientService;
-import main.bati.service.ProjetService;
-import main.bati.service.DevisService;
+import main.bati.service.*;
 
 import java.util.Scanner;
 
@@ -12,11 +9,15 @@ public class MainMenuView {
     private final ClientService clientService;
     private final ProjetService projetService;
     private final DevisService devisService;
+    private final MateriauService materiauService;
+    private final MainDoeuvreService mainDoeuvreService;
 
-    public MainMenuView(ClientService clientService, ProjetService projetService, DevisService devisService) {
+    public MainMenuView(ClientService clientService, ProjetService projetService, DevisService devisService,MateriauService materiauService, MainDoeuvreService mainDoeuvreService ) {
         this.clientService = clientService;
         this.projetService = projetService;
         this.devisService = devisService;
+        this.materiauService = materiauService;
+        this.mainDoeuvreService = mainDoeuvreService;
     }
 
     public void display() {
@@ -32,11 +33,10 @@ public class MainMenuView {
 
             switch (option) {
                 case 1:
-//                    new ProjectMenuView(clientService, projetService).display();
-                    new ClientMenuView(clientService).display();
+                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService).display();
                     break;
                 case 2:
-                    new ProjectMenuView(clientService, projetService).displayProjects();
+                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService).displayProjects();
                     break;
                 case 3:
                     new CostCalculationView(projetService).display();

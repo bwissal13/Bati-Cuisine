@@ -14,22 +14,22 @@ public class ProjetController {
     }
 
     public void addProjet(Project projet) {
-        projetService.addProjet(projet);
+        projetService.addProject(projet);
     }
 
     public List<Project> getAllProjets() {
-        return projetService.getAllProjets();
+        return projetService.getAllProjects();
     }
 
     public Project getProjetById(int id) {
-        return projetService.getProjetById(id);
+        return projetService.getProjectById(id);
     }
 
     public void updateProjet(Project projet) {
-        projetService.updateProjet(projet);
+        projetService.updateProject(projet);
     }
 
     public void deleteProjet(int id) {
-        projetService.deleteProjet(id);
+        projetService.deleteProject(id);
     }
 }

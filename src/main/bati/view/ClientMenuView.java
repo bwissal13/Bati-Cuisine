@@ -25,13 +25,13 @@ public class ClientMenuView {
 
             switch (option) {
                 case 1:
-                    addNewClient(); // Appelle la méthode pour ajouter un client
+                    addNewClient(); // Call method to add a new client
                     break;
                 case 2:
-                    displayClients(); // Affiche les clients existants
+                    displayClients(); // Display existing clients
                     break;
                 case 3:
-                    return; // Retourne au menu principal
+                    return; // Return to the main menu
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
             }
@@ -49,17 +49,17 @@ public class ClientMenuView {
         boolean isProfessional = scanner.nextBoolean();
         scanner.nextLine(); // consume newline
 
-        // Créez un nouvel objet Client et appelez la méthode du service pour l'ajouter
-        Client newClient = new Client(name, address, phone, isProfessional); // Assurez-vous que le constructeur existe
-        clientService.addClient(newClient); // Appelez la méthode de service
+        // Create a new Client object and call the service to add it
+        Client newClient = new Client(name, address, phone, isProfessional);
+        clientService.addClient(newClient); // Call the service method
         System.out.println("Client ajouté avec succès !");
     }
 
     private void displayClients() {
         System.out.println("--- Liste des Clients ---");
-        // Récupérez et affichez la liste des clients à partir du service
+        // Fetch and display the list of clients from the service
         clientService.getAllClients().forEach(client -> {
-            System.out.println("Client : " + client.getNom() + ", Adresse : " + client.getAdresse() +
+            System.out.println("Client : " + client.getNom() + ", Adresse : " + client.getAdress() +
                     ", Téléphone : " + client.getTelephone() +
                     ", Professionnel : " + (client.isEstProfessionnel() ? "Oui" : "Non"));
         });

@@ -2,6 +2,7 @@ package main.bati.repository.Project;
 
 import main.bati.model.Project;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +15,11 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
     @Override
         public void add(Project projet) {
-        String query = "INSERT INTO projets (nomProjet, margeBeneficiaire, coutTotal, etatProjet, clientId, devisId) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO projets (nomProjet,clientid) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, projet.getNomProjet());
-            stmt.setBigDecimal(2, projet.getMargeBeneficiaire());
-            stmt.setBigDecimal(3, projet.getCoutTotal());
-            stmt.setString(4, projet.getEtatProjet());
-            stmt.setInt(5, projet.getClientId());
-            stmt.setInt(6, projet.getDevisId());
+
+            stmt.setInt(2, projet.getClientId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,8 +38,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                         rs.getBigDecimal("margeBeneficiaire"),
                         rs.getBigDecimal("coutTotal"),
                         rs.getString("etatProjet"),
-                        rs.getInt("clientId"),
-                        rs.getInt("devisId")
+                        rs.getInt("clientId")
+
                 );
                 projets.add(projet);
             }
@@ -63,8 +61,8 @@ public class ProjectRepositoryImpl implements ProjectRepository {
                         rs.getBigDecimal("margeBeneficiaire"),
                         rs.getBigDecimal("coutTotal"),
                         rs.getString("etatProjet"),
-                        rs.getInt("clientId"),
-                        rs.getInt("devisId")
+                        rs.getInt("clientId")
+
                 );
             }
         } catch (SQLException e) {
@@ -74,15 +72,14 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
     @Override
         public void update(Project projet) {
-        String query = "UPDATE projets SET nomProjet = ?, margeBeneficiaire = ?, coutTotal = ?, etatProjet = ?, clientId = ?, devisId = ? WHERE id = ?";
+        String query = "UPDATE projets SET nomProjet = ?, margeBeneficiaire = ?, coutTotal = ?, etatProjet = ?, clientId = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, projet.getNomProjet());
             stmt.setBigDecimal(2, projet.getMargeBeneficiaire());
             stmt.setBigDecimal(3, projet.getCoutTotal());
             stmt.setString(4, projet.getEtatProjet());
             stmt.setInt(5, projet.getClientId());
-            stmt.setInt(6, projet.getDevisId());
-            stmt.setInt(7, projet.getId());
+            stmt.setInt(6, projet.getId());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -98,4 +95,5 @@ public class ProjectRepositoryImpl implements ProjectRepository {
             e.printStackTrace();
         }
     }
+
 }
