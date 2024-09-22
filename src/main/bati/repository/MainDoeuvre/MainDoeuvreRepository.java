@@ -9,5 +9,5 @@ public interface MainDoeuvreRepository {
     MainDoeuvre findById(int id);
     List<MainDoeuvre> findAll();
     void delete(int id);
-    List<MainDoeuvre> findByProjectId(int projectId);
+
 }

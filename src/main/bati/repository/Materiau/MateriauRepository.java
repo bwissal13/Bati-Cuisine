@@ -9,5 +9,5 @@ public interface MateriauRepository {
     Materiau findById(int id);
     List<Materiau> findAll();
     void delete(int id);
-    List<Materiau> findByProjectId(int projectId);
+
 }

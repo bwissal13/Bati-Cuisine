@@ -53,39 +53,7 @@ public class ProjetService {
         return projectRepository.findById(projectId);
     }
 
-    public BigDecimal calculerCoutTotal(int projectId, BigDecimal tvaPercentage, BigDecimal margePercentage) {
-        List<Materiau> materiaux = findMateriauxByProjectId(projectId);
-        List<MainDoeuvre> mainDoeuvres = findMainDoeuvresByProjectId(projectId);
 
-        BigDecimal totalMateriauxCost = materiaux.stream()
-                .map(Materiau::calculerCoutTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal totalMainDoeuvreCost = mainDoeuvres.stream()
-                .map(MainDoeuvre::calculerCoutTotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal totalCostBeforeTVA = totalMateriauxCost.add(totalMainDoeuvreCost);
-        BigDecimal totalCostWithTVA = totalCostBeforeTVA.multiply(BigDecimal.ONE.add(tvaPercentage.divide(BigDecimal.valueOf(100))));
-        BigDecimal finalTotalCost = totalCostWithTVA.multiply(BigDecimal.ONE.add(margePercentage.divide(BigDecimal.valueOf(100))));
-
-        return finalTotalCost;
-    }
-
-    public Client findClientById(int clientId) {
-        return clientRepository.findById(clientId);
-    }
-
-    public String findClientAddressById(int clientId) {
-        Client client = findClientById(clientId);
-        return client != null ? client.getAdress() : "Adresse non disponible";
-    }
-
-    public List<Materiau> findMateriauxByProjectId(int projectId) {
-        return materiauRepository.findByProjectId(projectId);
-    }
-
-    public List<MainDoeuvre> findMainDoeuvresByProjectId(int projectId) {
-        return mainDoeuvreRepository.findByProjectId(projectId);
-    }
 }

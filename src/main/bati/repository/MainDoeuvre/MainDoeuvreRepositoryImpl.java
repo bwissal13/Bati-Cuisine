@@ -16,12 +16,6 @@ public class MainDoeuvreRepositoryImpl implements MainDoeuvreRepository {
     private final List<MainDoeuvre> mainDoeuvresDatabase = new ArrayList<>();
 
     @Override
-    public List<MainDoeuvre> findByProjectId(int projectId) {
-        return mainDoeuvresDatabase.stream()
-//                .filter(mainDoeuvre -> mainDoeuvre.getProjectId() == projectId)
-                .collect(Collectors.toList());
-    }
-    @Override
     public void add(MainDoeuvre mainDoeuvre) {
         String query = "INSERT INTO maindoeuvres (nom, coutUnitaire, typeComposant, tauxTVA, tauxHoraire, heuresTravail, productivite) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {

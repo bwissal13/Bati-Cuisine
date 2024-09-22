@@ -15,12 +15,6 @@ public class MateriauRepositoryImpl implements MateriauRepository {
     }
     private final List<Materiau> materiauxDatabase = new ArrayList<>();
 
-    @Override
-    public List<Materiau> findByProjectId(int projectId) {
-        return materiauxDatabase.stream()
-//                .filter(materiau -> materiau.getProjectId() == projectId)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public void add(Materiau materiau) {
