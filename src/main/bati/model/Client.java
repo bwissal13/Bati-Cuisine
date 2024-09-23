@@ -1,4 +1,3 @@
-// src/java/model/Client.java
 package main.bati.model;
 
 public class Client {
@@ -8,7 +7,7 @@ public class Client {
     private String telephone;
     private boolean estProfessionnel;
 
-    // Constructors
+
     public Client() {}
 
     public Client(int id, String nom, String adresse, String telephone, boolean estProfessionnel) {
@@ -26,7 +25,6 @@ public class Client {
         this.estProfessionnel = estProfessionnel;
     }
 
-    // Getters and Setters
 
     public int getId() {
         return id;

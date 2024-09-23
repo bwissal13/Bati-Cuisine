@@ -21,8 +21,6 @@ public class Project {
         this.clientId = clientId;
 
     }
-
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -72,18 +70,13 @@ public class Project {
     }
     public void calculerCoutTotal(List<Materiau> materiaux, List<MainDoeuvre> mainDoeuvres) {
         BigDecimal totalCost = BigDecimal.ZERO;
-
-        // Calculate the total cost of materials
         for (Materiau materiau : materiaux) {
             totalCost = totalCost.add(materiau.calculerCoutTotal());
         }
-
-        // Calculate the total cost of labor
         for (MainDoeuvre mainDoeuvre : mainDoeuvres) {
             totalCost = totalCost.add(mainDoeuvre.calculerCoutTotal());
         }
 
-        // Apply the profit margin if it exists
         if (margeBeneficiaire != null) {
             totalCost = totalCost.multiply(BigDecimal.ONE.add(margeBeneficiaire));
         }

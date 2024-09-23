@@ -25,28 +25,28 @@ public class MainDoeuvreMenuView {
 
             System.out.print("Entrez le taux horaire de cette main-d'œuvre (€/h) : ");
             BigDecimal tauxHoraire = scanner.nextBigDecimal();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             System.out.print("Entrez le nombre d'heures travaillées : ");
             int heuresTravail = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             System.out.print("Entrez le facteur de productivité (1.0 = standard, > 1.0 = haute productivité) : ");
             BigDecimal productivite = scanner.nextBigDecimal();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             System.out.print("Entrez le coût unitaire (ceci peut correspondre au coût lié à l'employé, aux charges, etc.) : ");
             BigDecimal coutUnitaire = scanner.nextBigDecimal();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
-            // Assuming tauxTVA and typeComposant are constant for this example
-            BigDecimal tauxTVA = BigDecimal.valueOf(0.2);  // Example: 20% VAT
-            String typeComposant = "Main-d'œuvre";         // Fixed component type
 
-            // Create MainDoeuvre object
+            BigDecimal tauxTVA = BigDecimal.valueOf(0.2);
+            String typeComposant = "Main-d'œuvre";
+
+
             MainDoeuvre mainDoeuvre = new MainDoeuvre(nom, coutUnitaire, typeComposant, tauxTVA, tauxHoraire, heuresTravail, productivite);
 
-            // Add the main-d'œuvre via the service
+
             mainDoeuvreService.addMainDoeuvre(mainDoeuvre);
 
             System.out.println("Main-d'œuvre ajoutée avec succès !");

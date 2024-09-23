@@ -12,7 +12,6 @@ public class MateriauService {
         this.materiauRepository = materiauRepository;
     }
 
-    // Add a new Materiau
     public void addMateriau(Materiau materiau) {
         materiauRepository.add(materiau);
         System.out.println("Matériau ajouté avec succès.");

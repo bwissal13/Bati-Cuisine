@@ -13,8 +13,8 @@ public class CostCalculationView {
     }
 
     public void display() {
-        // Logic for calculating project cost
+
         System.out.println("--- Calcul du coût total ---");
-        // Get project details and calculate costs
+
     }
 }

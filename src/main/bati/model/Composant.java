@@ -14,10 +14,8 @@ public abstract class Composant {
         this.tauxTVA = tauxTVA;
     }
 
-    // Abstract method to calculate total cost (override in subclasses)
     public abstract BigDecimal calculerCoutTotal();
 
-    // Getters and setters
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
 

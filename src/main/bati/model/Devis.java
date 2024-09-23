@@ -10,9 +10,6 @@ public class Devis {
     private LocalDate dateValidite;
     private boolean accepte;
 
-    // Constructors
-    public Devis() {}
-
     public Devis(int id, BigDecimal montantEstime, LocalDate dateEmission, LocalDate dateValidite, boolean accepte) {
         this.id = id;
         this.montantEstime = montantEstime;
@@ -27,8 +24,6 @@ public class Devis {
         this.dateValidite = dateValidite;
         this.accepte = accepte;
     }
-
-    // Getters and Setters
 
     public int getId() {
         return id;

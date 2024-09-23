@@ -21,17 +21,17 @@ public class ClientMenuView {
             System.out.print("Choisissez une option : ");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
-                    addNewClient(); // Call method to add a new client
+                    addNewClient();
                     break;
                 case 2:
-                    displayClients(); // Display existing clients
+                    displayClients();
                     break;
                 case 3:
-                    return; // Return to the main menu
+                    return;
                 default:
                     System.out.println("Option invalide. Veuillez réessayer.");
             }
@@ -47,11 +47,11 @@ public class ClientMenuView {
         String phone = scanner.nextLine();
         System.out.print("Le client est-il professionnel ? (true/false) : ");
         boolean isProfessional = scanner.nextBoolean();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
-        // Create a new Client object and call the service to add it
+
         Client newClient = new Client(name, address, phone, isProfessional);
-        clientService.addClient(newClient); // Call the service method
+        clientService.addClient(newClient);
         System.out.println("Client ajouté avec succès !");
     }
 

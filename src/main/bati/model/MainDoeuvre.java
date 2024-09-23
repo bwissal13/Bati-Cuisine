@@ -15,13 +15,11 @@ public class MainDoeuvre extends Composant {
 
     }
 
-
     @Override
     public BigDecimal calculerCoutTotal() {
         return tauxHoraire.multiply(new BigDecimal(heuresTravail)).multiply(productivite);
     }
 
-    // Getters and setters
     public BigDecimal getTauxHoraire() { return tauxHoraire; }
     public void setTauxHoraire(BigDecimal tauxHoraire) { this.tauxHoraire = tauxHoraire; }
 

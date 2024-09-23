@@ -29,7 +29,7 @@ public class MainMenuView {
             System.out.println("4. Quitter");
             System.out.print("Choisissez une option : ");
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (option) {
                 case 1:

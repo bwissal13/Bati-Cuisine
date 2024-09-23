@@ -32,7 +32,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         }
     }
 
-    // Find a Composant by its ID
     @Override
     public Composant findByName(String nom) {
         String query = "SELECT * FROM composants WHERE nom = ?";
@@ -48,7 +47,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         return null;
     }
 
-    // Get all Composants
     @Override
     public List<Composant> findAll() {
         String query = "SELECT * FROM composants";
@@ -65,7 +63,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         return composants;
     }
 
-    // Update an existing Composant
     @Override
     public void update(Composant composant) {
         String query = "UPDATE composants SET nom = ?, coutUnitaire = ?, typeComposant = ?, tauxTVA = ? WHERE id = ?";
@@ -82,7 +79,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         }
     }
 
-    // Delete a Composant by its ID
     @Override
     public void delete(int id) {
         String query = "DELETE FROM composants WHERE id = ?";

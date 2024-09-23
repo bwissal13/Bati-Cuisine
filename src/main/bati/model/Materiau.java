@@ -21,8 +21,6 @@ public class Materiau extends Composant {
     public BigDecimal calculerCoutTotal() {
         return getCoutUnitaire().multiply(new BigDecimal(quantite)).add(coutTransport).multiply(coefficientQualite);
     }
-
-    // Getters and setters
     public int getQuantite() { return quantite; }
     public void setQuantite(int quantite) { this.quantite = quantite; }
 
