@@ -1,5 +1,6 @@
 package main.bati.repository.Project;
 
+import main.bati.enumeration.EtatProjet;
 import main.bati.model.Project;
 
 import java.math.BigDecimal;
@@ -9,24 +10,31 @@ import java.util.List;
 
 public class ProjectRepositoryImpl implements ProjectRepository {
     private final Connection connection;
-
-        public ProjectRepositoryImpl(Connection connection) {
+    public ProjectRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
     @Override
-        public void add(Project projet) {
-        String query = "INSERT INTO projets (nomProjet,clientid) VALUES (?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+    public Project add(Project projet) {
+        String query = "INSERT INTO projets (nomProjet, clientid) VALUES (?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, projet.getNomProjet());
-
             stmt.setInt(2, projet.getClientId());
-            stmt.executeUpdate();
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        projet.setId(generatedKeys.getInt(1));
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return projet;
     }
     @Override
-        public List<Project> findAll() {
+    public List<Project> findAll() {
         List<Project> projets = new ArrayList<>();
         String query = "SELECT * FROM projets";
         try (Statement stmt = connection.createStatement();
@@ -49,7 +57,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         return projets;
     }
     @Override
-        public Project findById(int id) {
+    public Project findById(int id) {
         String query = "SELECT * FROM projets WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);
@@ -71,22 +79,27 @@ public class ProjectRepositoryImpl implements ProjectRepository {
         return null;
     }
     @Override
-        public void update(Project projet) {
-        String query = "UPDATE projets SET nomProjet = ?, margeBeneficiaire = ?, coutTotal = ?, etatProjet = ?, clientId = ? WHERE id = ?";
+    public void update(Project project, EtatProjet etatProjet) {
+        String query = "UPDATE public.projets SET margebeneficiaire = ?, couttotal = ?, etatprojet = ? WHERE id = ?";
+
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, projet.getNomProjet());
-            stmt.setBigDecimal(2, projet.getMargeBeneficiaire());
-            stmt.setBigDecimal(3, projet.getCoutTotal());
-            stmt.setString(4, projet.getEtatProjet());
-            stmt.setInt(5, projet.getClientId());
-            stmt.setInt(6, projet.getId());
-            stmt.executeUpdate();
+            stmt.setBigDecimal(1, project.getMargeBeneficiaire());
+            stmt.setBigDecimal(2, project.getCoutTotal());
+            stmt.setString(3, etatProjet.name());
+            stmt.setInt(4, project.getId());
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Project updated successfully.");
+            } else {
+                System.out.println("No project found with ID: " + project.getId());
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Error updating project: " + e.getMessage());
         }
     }
     @Override
-        public void delete(int id) {
+    public void delete(int id) {
         String query = "DELETE FROM projets WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, id);

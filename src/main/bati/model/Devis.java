@@ -10,21 +10,12 @@ public class Devis {
     private LocalDate dateValidite;
     private boolean accepte;
 
-    public Devis(int id, BigDecimal montantEstime, LocalDate dateEmission, LocalDate dateValidite, boolean accepte) {
-        this.id = id;
-        this.montantEstime = montantEstime;
-        this.dateEmission = dateEmission;
-        this.dateValidite = dateValidite;
-        this.accepte = accepte;
-    }
-
     public Devis(BigDecimal montantEstime, LocalDate dateEmission, LocalDate dateValidite, boolean accepte) {
         this.montantEstime = montantEstime;
         this.dateEmission = dateEmission;
         this.dateValidite = dateValidite;
         this.accepte = accepte;
     }
-
     public int getId() {
         return id;
     }
@@ -37,32 +28,16 @@ public class Devis {
         return montantEstime;
     }
 
-    public void setMontantEstime(BigDecimal montantEstime) {
-        this.montantEstime = montantEstime;
-    }
-
     public LocalDate getDateEmission() {
         return dateEmission;
-    }
-
-    public void setDateEmission(LocalDate dateEmission) {
-        this.dateEmission = dateEmission;
     }
 
     public LocalDate getDateValidite() {
         return dateValidite;
     }
 
-    public void setDateValidite(LocalDate dateValidite) {
-        this.dateValidite = dateValidite;
-    }
-
     public boolean isAccepte() {
         return accepte;
-    }
-
-    public void setAccepte(boolean accepte) {
-        this.accepte = accepte;
     }
 
     @Override

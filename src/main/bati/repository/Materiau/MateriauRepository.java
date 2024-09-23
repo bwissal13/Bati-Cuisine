@@ -5,9 +5,9 @@ import main.bati.model.Materiau;
 import java.util.List;
 
 public interface MateriauRepository {
-    void add(Materiau materiau);
+    void add(Materiau materiau, int projectId);
     Materiau findById(int id);
     List<Materiau> findAll();
     void delete(int id);
-
+    List<Materiau> findByProjectId(int projectId);
 }

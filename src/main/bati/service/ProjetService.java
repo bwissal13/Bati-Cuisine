@@ -1,5 +1,6 @@
 package main.bati.service;
 
+import main.bati.enumeration.EtatProjet;
 import main.bati.model.Client;
 import main.bati.model.MainDoeuvre;
 import main.bati.model.Materiau;
@@ -26,34 +27,42 @@ public class ProjetService {
         this.clientRepository = clientRepository;
     }
 
-    public void addProject(Project project) {
+    public Project addProject(Project project) {
         if (ValidationUtil.isNotNull(project) && ValidationUtil.isStringValid(project.getNomProjet())) {
             projectRepository.add(project);
         }
+        return project;
     }
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
-
     public Project getProjectById(int id) {
         return projectRepository.findById(id);
     }
-
-    public void updateProject(Project project) {
+    public void updateProject(Project project,EtatProjet etatProjet) {
         if (ValidationUtil.isNotNull(project) && ValidationUtil.isStringValid(project.getNomProjet())) {
-            projectRepository.update(project);
+            projectRepository.update(project, etatProjet);
         }
     }
-
-    public void deleteProject(int id) {
-        projectRepository.delete(id);
+    public List<Materiau> getMateriauxForProject(int projectId) {
+        return materiauRepository.findByProjectId(projectId);
     }
-    public Project findProjectById(int projectId) {
-        return projectRepository.findById(projectId);
+    public List<MainDoeuvre> getMainDoeuvreForProject(int projectId) {
+        return mainDoeuvreRepository.findByProjectId(projectId);
     }
-
-
+    public BigDecimal calculateTotalMaterialCost(int projectId) {
+        List<Materiau> materiaux = getMateriauxForProject(projectId);
+        return materiaux.stream()
+                .map(Materiau::calculerCoutTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+    public BigDecimal calculateTotalLaborCost(int projectId) {
+        List<MainDoeuvre> mainDoeuvreList = getMainDoeuvreForProject(projectId);
+        return mainDoeuvreList.stream()
+                .map(MainDoeuvre::calculerCoutTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
 
 }

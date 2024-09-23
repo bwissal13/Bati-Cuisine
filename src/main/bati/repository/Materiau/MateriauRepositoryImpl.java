@@ -5,7 +5,6 @@ import main.bati.model.Materiau;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MateriauRepositoryImpl implements MateriauRepository {
     private final Connection connection;
@@ -13,12 +12,9 @@ public class MateriauRepositoryImpl implements MateriauRepository {
     public MateriauRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
-    private final List<Materiau> materiauxDatabase = new ArrayList<>();
-
-
     @Override
-    public void add(Materiau materiau) {
-        String query = "INSERT INTO materiaux (nom, coutUnitaire, typeComposant, tauxTVA, quantite, coutTransport, coefficientQualite) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public void add(Materiau materiau, int projectId) {
+        String query = "INSERT INTO materiaux (nom, coutUnitaire, typeComposant, tauxTVA, quantite, coutTransport, coefficientQualite, project_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, materiau.getNom());
             stmt.setBigDecimal(2, materiau.getCoutUnitaire());
@@ -27,12 +23,12 @@ public class MateriauRepositoryImpl implements MateriauRepository {
             stmt.setInt(5, materiau.getQuantite());
             stmt.setBigDecimal(6, materiau.getCoutTransport());
             stmt.setBigDecimal(7, materiau.getCoefficientQualite());
+            stmt.setInt(8, projectId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     @Override
     public Materiau findById(int id) {
         String query = "SELECT * FROM materiau WHERE id = ?";
@@ -55,7 +51,6 @@ public class MateriauRepositoryImpl implements MateriauRepository {
         }
         return null;
     }
-
     @Override
     public List<Materiau> findAll() {
         List<Materiau> materiaux = new ArrayList<>();
@@ -77,8 +72,6 @@ public class MateriauRepositoryImpl implements MateriauRepository {
         }
         return materiaux;
     }
-
-
     @Override
     public void delete(int id) {
         String query = "DELETE FROM materiau WHERE id = ?";
@@ -88,5 +81,32 @@ public class MateriauRepositoryImpl implements MateriauRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public List<Materiau> findByProjectId(int projectId) {
+        List<Materiau> materiaux = new ArrayList<>();
+        String sql = "SELECT * FROM materiaux WHERE project_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, projectId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Materiau materiau = new Materiau(
+                        rs.getString("nom"),
+                        rs.getBigDecimal("coutunitaire"),
+                        rs.getString("typecomposant"),
+                        rs.getBigDecimal("tauxtva"),
+                        rs.getInt("quantite"),
+                        rs.getBigDecimal("couttransport"),
+                        rs.getBigDecimal("coefficientqualite")
+                );
+                materiaux.add(materiau);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return materiaux;
     }
 }

@@ -10,13 +10,9 @@ import java.util.List;
 
 public class ComposantRepositoryImpl implements ComposantRepository {
     private final Connection connection;
-
-    // Constructor to pass in the database connection
     public ComposantRepositoryImpl(Connection connection) {
         this.connection = connection;
     }
-
-    // Add a new Composant to the database
     @Override
     public void add(Composant composant) {
         String query = "INSERT INTO composants (nom, coutUnitaire, typeComposant, tauxTVA) VALUES (?, ?, ?, ?)";
@@ -31,7 +27,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
             e.printStackTrace();
         }
     }
-
     @Override
     public Composant findByName(String nom) {
         String query = "SELECT * FROM composants WHERE nom = ?";
@@ -46,7 +41,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         }
         return null;
     }
-
     @Override
     public List<Composant> findAll() {
         String query = "SELECT * FROM composants";
@@ -62,7 +56,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
         }
         return composants;
     }
-
     @Override
     public void update(Composant composant) {
         String query = "UPDATE composants SET nom = ?, coutUnitaire = ?, typeComposant = ?, tauxTVA = ? WHERE id = ?";
@@ -78,7 +71,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
             e.printStackTrace();
         }
     }
-
     @Override
     public void delete(int id) {
         String query = "DELETE FROM composants WHERE id = ?";
@@ -90,8 +82,6 @@ public class ComposantRepositoryImpl implements ComposantRepository {
             e.printStackTrace();
         }
     }
-
-    // Helper method to extract Composant from ResultSet
     private Composant extractComposantFromResultSet(ResultSet rs) throws SQLException {
         String nom = rs.getString("nom");
         BigDecimal coutUnitaire = rs.getBigDecimal("coutUnitaire");

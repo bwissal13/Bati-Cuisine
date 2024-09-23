@@ -12,12 +12,14 @@ public class MainMenuView {
     private final MateriauService materiauService;
     private final MainDoeuvreService mainDoeuvreService;
 
+
     public MainMenuView(ClientService clientService, ProjetService projetService, DevisService devisService,MateriauService materiauService, MainDoeuvreService mainDoeuvreService ) {
         this.clientService = clientService;
         this.projetService = projetService;
         this.devisService = devisService;
         this.materiauService = materiauService;
         this.mainDoeuvreService = mainDoeuvreService;
+
     }
 
     public void display() {
@@ -33,13 +35,13 @@ public class MainMenuView {
 
             switch (option) {
                 case 1:
-                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService).display();
+                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService,devisService).display();
                     break;
                 case 2:
-                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService).displayProjects();
+                    new ProjectMenuView(clientService, projetService, materiauService,mainDoeuvreService,devisService).displayProjects();
                     break;
                 case 3:
-                    new CostCalculationView(projetService).display();
+                    new CostCalculationView(projetService,devisService).display();
                     break;
                 case 4:
                     System.out.println("Au revoir !");

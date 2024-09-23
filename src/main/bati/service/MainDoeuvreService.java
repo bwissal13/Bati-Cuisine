@@ -7,24 +7,11 @@ import java.util.List;
 
 public class MainDoeuvreService {
     private final MainDoeuvreRepository mainDoeuvreRepository;
-
     public MainDoeuvreService(MainDoeuvreRepository mainDoeuvreRepository) {
         this.mainDoeuvreRepository = mainDoeuvreRepository;
     }
-
-    public void addMainDoeuvre(MainDoeuvre mainDoeuvre) {
-        mainDoeuvreRepository.add(mainDoeuvre);
+    public void addMainDoeuvre(MainDoeuvre mainDoeuvre, int projectId) {
+        mainDoeuvreRepository.add(mainDoeuvre, projectId);
     }
 
-    public MainDoeuvre getMainDoeuvreById(int id) {
-        return mainDoeuvreRepository.findById(id);
-    }
-
-    public List<MainDoeuvre> getAllMainDoeuvres() {
-        return mainDoeuvreRepository.findAll();
-    }
-
-    public void deleteMainDoeuvre(int id) {
-        mainDoeuvreRepository.delete(id);
-    }
 }

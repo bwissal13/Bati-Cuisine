@@ -1,16 +1,10 @@
 package main.bati.view;
 
 import main.bati.model.Client;
-import main.bati.model.MainDoeuvre;
-import main.bati.model.Materiau;
 import main.bati.model.Project;
-import main.bati.service.ClientService;
-import main.bati.service.MainDoeuvreService;
-import main.bati.service.MateriauService;
-import main.bati.service.ProjetService;
+import main.bati.service.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -20,11 +14,14 @@ public class ProjectMenuView {
     private final ProjetService projetService;
     private final MateriauService materiauService;
     private final MainDoeuvreService mainDoeuvreService;
-    public ProjectMenuView(ClientService clientService, ProjetService projetService, MateriauService materiauService, MainDoeuvreService mainDoeuvreService) {
+private final DevisService devisService;
+
+    public ProjectMenuView(ClientService clientService, ProjetService projetService, MateriauService materiauService, MainDoeuvreService mainDoeuvreService,DevisService devisService) {
         this.clientService = clientService;
         this.projetService = projetService;
-        this.materiauService= materiauService;
+        this.materiauService = materiauService;
         this.mainDoeuvreService = mainDoeuvreService;
+        this.devisService = devisService;
 
     }
 
@@ -34,7 +31,7 @@ public class ProjectMenuView {
         System.out.println("2. Ajouter un nouveau client");
         System.out.print("Choisissez une option : ");
         int clientOption = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         Client selectedClient;
 
@@ -90,8 +87,7 @@ public class ProjectMenuView {
         String phone = scanner.nextLine();
         System.out.print("Le client est-il professionnel ? (true/false) : ");
         boolean isProfessional = scanner.nextBoolean();
-        scanner.nextLine(); // consume newline
-
+        scanner.nextLine();
         Client newClient = new Client(name, address, phone, isProfessional);
         clientService.addClient(newClient);
         System.out.println("Client ajouté avec succès !");
@@ -99,21 +95,23 @@ public class ProjectMenuView {
     }
 
     private void createProject(Client client) {
+        System.out.println(client.getId());
         System.out.println("--- Création d'un Nouveau Projet ---");
         System.out.print("Entrez le nom du projet : ");
         String projectName = scanner.nextLine();
 
         System.out.print("Entrez la surface de la cuisine (en m²) : ");
         BigDecimal surface = scanner.nextBigDecimal();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         Project newProject = new Project(0, projectName, BigDecimal.ZERO, BigDecimal.ZERO, "0", client.getId());
 
-        projetService.addProject(newProject);
-        System.out.println("Projet créé avec succès pour le client " + client.getNom());
-        MainDoeuvreMenuView mainDoeuvreMenuView = new MainDoeuvreMenuView(mainDoeuvreService);
-        MateriauMenuView materiauMenuView = new MateriauMenuView(materiauService, mainDoeuvreMenuView);
+        Project createdProject = projetService.addProject(newProject);
+        System.out.println("Projet créé avec succès pour le client " + client.getNom() + ". ID du projet : " + createdProject.getId());
 
+        MainDoeuvreMenuView mainDoeuvreMenuView = new MainDoeuvreMenuView(mainDoeuvreService,projetService,devisService,createdProject.getId());
+
+        MateriauMenuView materiauMenuView = new MateriauMenuView(materiauService, mainDoeuvreMenuView, createdProject.getId());
         materiauMenuView.display();
 
     }

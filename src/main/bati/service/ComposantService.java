@@ -8,27 +8,13 @@ import java.util.List;
 
 public class ComposantService {
     private final ComposantRepository composantRepository;
-
     public ComposantService(ComposantRepository composantRepository) {
         this.composantRepository = composantRepository;
     }
-
     public void addComposant(Composant composant) {
         composantRepository.add(composant);
         System.out.println("Composant ajouté avec succès.");
     }
-
-    // Get a Composant by its ID
-//    public Composant getComposantById(int id) {
-//        Composant composant = composantRepository.findById(id);
-//        if (composant != null) {
-//            return composant;
-//        } else {
-//            System.out.println("Composant non trouvé.");
-//            return null;
-//        }
-//    }
-
 
     public List<Composant> getAllComposants() {
         return composantRepository.findAll();

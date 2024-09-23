@@ -9,12 +9,8 @@ import java.util.List;
 
 public interface DevisRepository {
     public void add(Devis devis) ;
-
     public List<Devis> findAll();
-
     public Devis findById(int id) ;
-
     public void update(Devis devis) ;
-
     public void delete(int id);
 }

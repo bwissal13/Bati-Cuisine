@@ -11,11 +11,12 @@ public class MateriauMenuView {
     private final Scanner scanner = new Scanner(System.in);
     private final MateriauService materiauService;
     private final MainDoeuvreMenuView mainDoeuvreMenuView;
+    private final int projectId;
 
-
-    public MateriauMenuView(MateriauService materiauService, MainDoeuvreMenuView mainDoeuvreMenuView) {
+    public MateriauMenuView(MateriauService materiauService, MainDoeuvreMenuView mainDoeuvreMenuView, int projectId) {
         this.materiauService = materiauService;
         this.mainDoeuvreMenuView = mainDoeuvreMenuView;
+        this.projectId = projectId;
     }
 
     public void display() {
@@ -42,7 +43,7 @@ public class MateriauMenuView {
             scanner.nextLine();
 
             Materiau materiau = new Materiau(nomMateriau, coutUnitaire, "Matériel", BigDecimal.ZERO, quantite, coutTransport, coefficientQualite);
-            materiauService.addMateriau(materiau);
+            materiauService.addMateriau(materiau, projectId);
 
             System.out.println("Matériau ajouté avec succès !");
             System.out.print("Voulez-vous ajouter un autre matériau ? (y/n) : ");

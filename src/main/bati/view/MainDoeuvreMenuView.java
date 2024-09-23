@@ -1,7 +1,9 @@
 package main.bati.view;
 
 import main.bati.model.MainDoeuvre;
+import main.bati.service.DevisService;
 import main.bati.service.MainDoeuvreService;
+import main.bati.service.ProjetService; // Import the ProjetService
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -9,9 +11,16 @@ import java.util.Scanner;
 public class MainDoeuvreMenuView {
     private final Scanner scanner = new Scanner(System.in);
     private final MainDoeuvreService mainDoeuvreService;
+    private final ProjetService projetService;
+private final DevisService devisService;
+    private final int projectId;
 
-    public MainDoeuvreMenuView(MainDoeuvreService mainDoeuvreService) {
+
+    public MainDoeuvreMenuView(MainDoeuvreService mainDoeuvreService, ProjetService projetService,DevisService devisService, int projectId) {
         this.mainDoeuvreService = mainDoeuvreService;
+        this.projetService = projetService;
+        this.devisService = devisService;
+        this.projectId = projectId;
     }
 
     public void displayMenu() {
@@ -39,23 +48,24 @@ public class MainDoeuvreMenuView {
             BigDecimal coutUnitaire = scanner.nextBigDecimal();
             scanner.nextLine();
 
-
             BigDecimal tauxTVA = BigDecimal.valueOf(0.2);
             String typeComposant = "Main-d'œuvre";
 
-
             MainDoeuvre mainDoeuvre = new MainDoeuvre(nom, coutUnitaire, typeComposant, tauxTVA, tauxHoraire, heuresTravail, productivite);
 
-
-            mainDoeuvreService.addMainDoeuvre(mainDoeuvre);
+            mainDoeuvreService.addMainDoeuvre(mainDoeuvre, projectId);
 
             System.out.println("Main-d'œuvre ajoutée avec succès !");
+
             System.out.print("Voulez-vous ajouter un autre type de main-d'œuvre ? (y/n) : ");
             String response = scanner.nextLine();
 
             if (!response.equalsIgnoreCase("y")) {
                 addingMainDoeuvre = false;
             }
+
+            CostCalculationView costCalculationView = new CostCalculationView(projetService,devisService);
+            costCalculationView.display();
         }
     }
 }

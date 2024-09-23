@@ -18,13 +18,7 @@ public abstract class Composant {
 
     public String getNom() { return nom; }
     public void setNom(String nom) { this.nom = nom; }
-
     public BigDecimal getCoutUnitaire() { return coutUnitaire; }
-    public void setCoutUnitaire(BigDecimal coutUnitaire) { this.coutUnitaire = coutUnitaire; }
-
     public String getTypeComposant() { return typeComposant; }
-    public void setTypeComposant(String typeComposant) { this.typeComposant = typeComposant; }
-
     public BigDecimal getTauxTVA() { return tauxTVA; }
-    public void setTauxTVA(BigDecimal tauxTVA) { this.tauxTVA = tauxTVA; }
 }
